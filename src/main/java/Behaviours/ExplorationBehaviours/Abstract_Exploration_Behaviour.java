@@ -1,20 +1,18 @@
-package eu.su.mas.dedaleEtu.Behavirours.Exploration;
+package Behaviours.ExplorationBehaviours;
 
+import Agents.Simple_Agent;
+import Knowledge.Map_Representation;
 import dataStructures.tuple.Couple;
 import eu.su.mas.dedale.env.Observation;
 import eu.su.mas.dedale.mas.AbstractDedaleAgent;
-import eu.su.mas.dedaleEtu.mas.knowledge.MapRepresentation;
+import jade.core.behaviours.Behaviour;
 import jade.core.behaviours.SimpleBehaviour;
-import org.graphstream.graph.Edge;
 import org.graphstream.graph.ElementNotFoundException;
-import org.graphstream.graph.Graph;
 import org.graphstream.graph.Node;
-import org.graphstream.graph.implementations.SingleGraph;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
-import java.io.Serializable;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -24,37 +22,15 @@ public abstract class Abstract_Exploration_Behaviour extends SimpleBehaviour {
 
     protected boolean finished = false;
     protected String nearest_open_node = null;
-
-    protected MapRepresentation myMap;
-    protected List<String> openNodes;
-    protected Set<String> closedNodes;
-
+    protected Simple_Agent myAgent;
     protected boolean stop = false;
 
-    public Abstract_Exploration_Behaviour(final AbstractDedaleAgent myagent, MapRepresentation myMap) {
+    public Abstract_Exploration_Behaviour(final AbstractDedaleAgent myagent) {
         super(myagent);
-        this.myMap=myMap;
-        this.openNodes=new ArrayList<String>();
-        this.closedNodes=new HashSet<String>();
+        this.myAgent = (Simple_Agent) myagent;
+
     }
 
-    public MapRepresentation getMyMap() {
-        return myMap;
-    }
-
-    public static String seralizeKnowledge(MapRepresentation E){
-        JSONObject JS = new JSONObject();
-        JS.putAll(E.getGraphData());
-        return JS.toJSONString();
-    }
-
-    public static MapRepresentation unserialize(String S){
-        MapRepresentation M = new MapRepresentation(true);
-        JSONObject J = (JSONObject) JSONValue.parse(S);
-        HashMap<String,String> nodes  = (HashMap<String, String>) J.get("NODES");
-        System.out.println("J'arrive a désérialiser : " + nodes);
-        return M;
-    }
 
     public void updateWithKnowledg(JSONObject J) {
         //System.out.println("=====TEST MAJ CONNAISSANCES====");
@@ -66,7 +42,7 @@ public abstract class Abstract_Exploration_Behaviour extends SimpleBehaviour {
         //System.out.println("Données prises en entrée : " );
         LinkedList<String> ouverts_entree = new LinkedList<>();
         LinkedList<String> fermee_entree = new LinkedList<>();
-        List<Node> noeuds = this.myMap.getG().nodes().collect(Collectors.toList());
+        List<Node> noeuds = this.myAgent.getMap().getG().nodes().collect(Collectors.toList());
         List<String> id_noeuds = new LinkedList<>();
 
         for (Node n : noeuds) {
@@ -74,35 +50,35 @@ public abstract class Abstract_Exploration_Behaviour extends SimpleBehaviour {
         }
 
         for (String s : nodes.keySet()) {
-                switch (nodes.get(s)) {
-                    case "open":
-                        ouverts_entree.add(s);
-                        if (!(openNodes.contains(s)))
-                            openNodes.add(s);
-                        break;
-                    case "closed":
-                        fermee_entree.add(s);
-                        closedNodes.add(s);
-                        openNodes.remove(s);
-                        break;
-                    }
-                    if(openNodes.contains(s))
-                        this.myMap.addNode(s, MapRepresentation.MapAttribute.open);
-                    else
-                        this.myMap.addNode(s, MapRepresentation.MapAttribute.closed);
+            switch (nodes.get(s)) {
+                case "open":
+                    ouverts_entree.add(s);
+                    if (!(this.myAgent.openNodes.contains(s)))
+                        this.myAgent.openNodes.add(s);
+                    break;
+                case "closed":
+                    fermee_entree.add(s);
+                    this.myAgent.closedNodes.add(s);
+                    this.myAgent.openNodes.remove(s);
+                    break;
+            }
+            if(this.myAgent.openNodes.contains(s))
+                this.myAgent.getMap().addNode(s, Map_Representation.MapAttribute.open);
+            else
+                this.myAgent.getMap().addNode(s, Map_Representation.MapAttribute.closed);
 
             for (int i = 0; i < ja.size(); i++) {
                 JSONArray edge = (JSONArray) ja.get(i);
                 try{
-                    this.myMap.addEdge(edge.get(1).toString(), edge.get(2).toString());
+                    this.myAgent.getMap().addEdge(edge.get(1).toString(), edge.get(2).toString());
                 }catch (ElementNotFoundException E){
-                    this.myMap.addNode(edge.get(1).toString(), MapRepresentation.MapAttribute.valueOf(nodes.get(edge.get(1).toString())));
+                    this.myAgent.getMap().addNode(edge.get(1).toString(), Map_Representation.MapAttribute.valueOf(nodes.get(edge.get(1).toString())));
                     try{
-                        this.myMap.addEdge(edge.get(1).toString(), edge.get(2).toString());
+                        this.myAgent.getMap().addEdge(edge.get(1).toString(), edge.get(2).toString());
                     }catch (ElementNotFoundException E2)
                     {
-                        this.myMap.addNode(edge.get(2).toString(), MapRepresentation.MapAttribute.valueOf(nodes.get(edge.get(2).toString())));
-                        this.myMap.addEdge(edge.get(1).toString(), edge.get(2).toString());
+                        this.myAgent.getMap().addNode(edge.get(2).toString(), Map_Representation.MapAttribute.valueOf(nodes.get(edge.get(2).toString())));
+                        this.myAgent.getMap().addEdge(edge.get(1).toString(), edge.get(2).toString());
                     }
 
                 }
@@ -117,15 +93,15 @@ public abstract class Abstract_Exploration_Behaviour extends SimpleBehaviour {
         //System.out.println("==================FIN DU TEST=============");
     }
 
-    public List<String> getOpenNodes() {
-        return openNodes;
-    }
-
     protected void updateNodeStatu(){
 
         String myPosition=((AbstractDedaleAgent)this.myAgent).getCurrentPosition();
-        if(this.myMap==null)
-            this.myMap= new MapRepresentation();
+        if(this.myAgent.getMap()==null)
+        {
+            this.myAgent.setMap(new Map_Representation());
+            this.myAgent.setExploratory_behaviour(this);
+        }
+
         if (myPosition!=null) {
             nearest_open_node = null;
             //List of observable from the agent's current position
@@ -137,29 +113,30 @@ public abstract class Abstract_Exploration_Behaviour extends SimpleBehaviour {
             }
 
             //1) remove the current node from openlist and add it to closedNodes.
-            this.closedNodes.add(myPosition);
-            this.openNodes.remove(myPosition);
-            this.myMap.addNode(myPosition, MapRepresentation.MapAttribute.closed);
+            this.myAgent.closedNodes.add(myPosition);
+            this.myAgent.openNodes.remove(myPosition);
+
+            this.myAgent.getMap().addNode(myPosition, Map_Representation.MapAttribute.closed);
 
             //2) get the surrounding nodes and, if not in closedNodes, add them to open nodes.
 
             Iterator<Couple<String, List<Couple<Observation, Integer>>>> iter=lobs.iterator();
             while(iter.hasNext()){
                 String nodeId=iter.next().getLeft();
-                if (!this.closedNodes.contains(nodeId)){
-                    if (!this.openNodes.contains(nodeId)){
-                        this.openNodes.add(nodeId);
-                        this.myMap.addNode(nodeId, MapRepresentation.MapAttribute.open);
-                        this.myMap.addEdge(myPosition, nodeId);
+                if (!this.myAgent.closedNodes.contains(nodeId)){
+                    if (!this.myAgent.openNodes.contains(nodeId)){
+                        this.myAgent.openNodes.add(nodeId);
+                        this.myAgent.getMap().addNode(nodeId, Map_Representation.MapAttribute.open);
+                        this.myAgent.getMap().addEdge(myPosition, nodeId);
                     }else{
                         //the node exist, but not necessarily the edge
-                        this.myMap.addEdge(myPosition, nodeId);
+                        this.myAgent.getMap().addEdge(myPosition, nodeId);
                     }
                     if (nearest_open_node ==null) nearest_open_node = nodeId;
                 }
             }
 
-            if (this.openNodes.isEmpty()) {
+            if (this.myAgent.openNodes.isEmpty()) {
                 //Explo finished
                 finished = true;
                 System.out.println("Exploration successufully done, behaviour removed.");
@@ -177,19 +154,33 @@ public abstract class Abstract_Exploration_Behaviour extends SimpleBehaviour {
 
     public abstract String howToMove();
 
+
+
     @Override
     public void action(){
+        Simple_Agent SA = (Simple_Agent) myAgent;
+        for (String s:SA.getActive_conversations().keySet())
+            if(SA.getActive_conversations().get(s) > 0)
+                SA.getActive_conversations().put(s,SA.getActive_conversations().get(s)-1);
         updateNodeStatu();
         String next_pos = howToMove();
-        System.out.println("Je suis  : "+myAgent.getLocalName()+" je veux aller en : "+next_pos);
-        boolean success = ((AbstractDedaleAgent)this.myAgent).moveTo(next_pos);
-        if (!success)
-        {
-            nearest_open_node = null;
-            Collections.shuffle(openNodes);
+        try{
+            boolean success = ((AbstractDedaleAgent)this.myAgent).moveTo(next_pos);
+            while(!success){
+                next_pos = howToMove();
+                success = ((AbstractDedaleAgent)this.myAgent).moveTo(next_pos);
+                nearest_open_node = null;
+
+                //System.out.println("Je shuffle et donc");
+                //System.out.println("La liste deviens : "+this.myAgent.openNodes);
+                Collections.shuffle(this.myAgent.openNodes);
+            }
+        }catch (RuntimeException E){
+            finished = true;
         }
-        System.out.println("Je suis  : "+myAgent.getLocalName()+" je veux aller en : "+next_pos+" et ça donne "+success);
-        System.out.println("Ouverts de "+ myAgent.getLocalName()+" : "+ openNodes);
+
+        //System.out.println("Je suis  : "+myAgent.getLocalName()+" je veux aller en : "+next_pos+" et ça donne "+success);
+        //System.out.println("Ouverts de "+ myAgent.getLocalName()+" : "+ openNodes);
     }
 
 

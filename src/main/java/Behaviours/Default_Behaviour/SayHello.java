@@ -1,4 +1,4 @@
-package eu.su.mas.dedaleEtu.mas.behaviours;
+package Behaviours.Default_Behaviour;
 
 import eu.su.mas.dedale.mas.AbstractDedaleAgent;
 import jade.core.AID;

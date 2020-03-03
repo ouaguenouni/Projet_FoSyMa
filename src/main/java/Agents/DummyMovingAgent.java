@@ -1,15 +1,13 @@
-package eu.su.mas.dedaleEtu.mas.agents.dummies;
+package Agents;
+
+import Behaviours.Default_Behaviour.RandomWalkBehaviour;
+import Behaviours.Default_Behaviour.SayHello;
+import eu.su.mas.dedale.mas.AbstractDedaleAgent;
+import eu.su.mas.dedale.mas.agent.behaviours.startMyBehaviours;
+import jade.core.behaviours.Behaviour;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import eu.su.mas.dedale.mas.AbstractDedaleAgent;
-import eu.su.mas.dedale.mas.agent.behaviours.startMyBehaviours;
-
-import eu.su.mas.dedaleEtu.mas.behaviours.RandomWalkBehaviour;
-import eu.su.mas.dedaleEtu.mas.behaviours.SayHello;
-
-import jade.core.behaviours.Behaviour;
 
 /**
  * This example class start a Dummy agent that will possess two behaviours :
@@ -20,7 +18,7 @@ import jade.core.behaviours.Behaviour;
  * @author hc
  *
  */
-public class DummyMovingAgent extends AbstractDedaleAgent{
+public class DummyMovingAgent extends AbstractDedaleAgent {
 
 	private static final long serialVersionUID = -2991562876411096907L;
 	

@@ -1,8 +1,8 @@
-package eu.su.mas.dedaleEtu.mas.knowledge;
+package Knowledge;
 
-import java.io.Serializable;
-import java.util.*;
-
+import dataStructures.serializableGraph.SerializableNode;
+import dataStructures.serializableGraph.SerializableSimpleGraph;
+import javafx.application.Platform;
 import org.graphstream.algorithm.Dijkstra;
 import org.graphstream.graph.Edge;
 import org.graphstream.graph.EdgeRejectedException;
@@ -12,8 +12,10 @@ import org.graphstream.graph.implementations.SingleGraph;
 import org.graphstream.ui.fx_viewer.FxViewer;
 import org.graphstream.ui.view.Viewer;
 import org.graphstream.ui.view.Viewer.CloseFramePolicy;
+import org.json.simple.JSONObject;
 
-import dataStructures.serializableGraph.*;
+import java.io.Serializable;
+import java.util.*;
 
 /**
  * <pre>
@@ -23,7 +25,7 @@ import dataStructures.serializableGraph.*;
  * </pre>
  * @author hc
  */
-public class MapRepresentation implements Serializable {
+public class Map_Representation implements Serializable {
 
 	/**
 	 * A node is open, closed, or agent
@@ -36,7 +38,7 @@ public class MapRepresentation implements Serializable {
 	}
 
 	private static final long serialVersionUID = -1333959882640838272L;
-	
+
 	/*********************************
 	 * Parameters for graph rendering
 	 ********************************/
@@ -52,44 +54,29 @@ public class MapRepresentation implements Serializable {
 
 	private SerializableSimpleGraph<String, MapAttribute> sg;//used as a temporary dataStructure during migration
 
-	public Graph getG() {
-		return g;
-	}
 
-	public String getNodeStyle() {
-		return nodeStyle;
-	}
-
-	public void setG(Graph g) {
-		this.g = g;
-	}
-
-	public MapRepresentation() {
-		//System.setProperty("org.graphstream.ui.renderer","org.graphstream.ui.j2dviewer.J2DGraphRenderer");
-		System.setProperty("org.graphstream.ui", "javafx");
-		this.g= new SingleGraph("My world vision");
-		this.g.setAttribute("ui.stylesheet",nodeStyle);
-		
-		openGui();
-		
-		//this.viewer = this.g.display();
-
-		this.nbEdges=0;
-	}
-
-	public MapRepresentation(boolean param) {
+	public Map_Representation() {
 		//System.setProperty("org.graphstream.ui.renderer","org.graphstream.ui.j2dviewer.J2DGraphRenderer");
 		System.setProperty("org.graphstream.ui", "javafx");
 		this.g= new SingleGraph("My world vision");
 		this.g.setAttribute("ui.stylesheet",nodeStyle);
 
+		Platform.runLater(() -> {
+			openGui();
+		});
 		//this.viewer = this.g.display();
 
 		this.nbEdges=0;
+	}
+
+
+
+	public SerializableSimpleGraph<String, MapAttribute> getSg() {
+		return sg;
 	}
 
 	/**
-	 * Add or replace a node and its attribute 
+	 * Add or replace a node and its attribute
 	 * @param id Id of the node
 	 * @param mapAttribute associated state of the node
 	 */
@@ -123,7 +110,7 @@ public class MapRepresentation implements Serializable {
 
 	/**
 	 * Compute the shortest Path from idFrom to IdTo. The computation is currently not very efficient
-	 * 
+	 *
 	 * @param idFrom id of the origin node
 	 * @param idTo id of the destination node
 	 * @return the list of nodes to follow
@@ -153,20 +140,24 @@ public class MapRepresentation implements Serializable {
 		Iterator<Node> iter=this.g.iterator();
 		while(iter.hasNext()){
 			Node n=iter.next();
-			sg.addNode(n.getId(),(MapAttribute)n.getAttribute("ui.class"));
+			sg.addNode(n.getId(),MapAttribute.valueOf((String) n.getAttribute("ui.class")));
+			System.out.println("Ajout au graphe d'un noeud en "+n.getId());
 		}
 		Iterator<Edge> iterE=this.g.edges().iterator();
 		while (iterE.hasNext()){
 			Edge e=iterE.next();
 			Node sn=e.getSourceNode();
 			Node tn=e.getTargetNode();
+			System.out.println("Ajout au graphe d'un arc en "+sn.getId()+ "-" + tn.getId());
 			sg.addEdge(e.getId(), sn.getId(), tn.getId());
+			System.out.println("Juste pour voire : "+sg.getEdges(sn.getId()) + " - " + sg.getEdges(sn.getId()));
 		}
-
 		closeGui();
-
 		this.g=null;
-		
+	}
+
+	public Graph getG() {
+		return g;
 	}
 
 	public HashMap<String,Object> getGraphData(){
@@ -202,19 +193,30 @@ public class MapRepresentation implements Serializable {
 
 	}
 
+
+	public static String seralizeKnowledge(Map_Representation E){
+		JSONObject JS = new JSONObject();
+		JS.putAll(E.getGraphData());
+		return JS.toJSONString();
+	}
+
+
+
+
 	/**
 	 * After migration we load the serialized data and recreate the non serializable components (Gui,..)
 	 */
 	public void loadSavedData(){
-		
+
 		this.g= new SingleGraph("My world vision");
 		this.g.setAttribute("ui.stylesheet",nodeStyle);
-		
+
 		openGui();
-		
+
 		Integer nbEd=0;
 		for (SerializableNode<String, MapAttribute> n: this.sg.getAllNodes()){
-			this.g.addNode(n.getNodeId()).setAttribute("ui.class", n.getNodeContent().toString());
+			this.g.addNode( n.getNodeId()).setAttribute("ui.class", n.getNodeContent().toString() );
+			System.out.println( "ça merde pour l'id "+ n.getNodeId() );
 			for(String s:this.sg.getEdges(n.getNodeId())){
 				this.g.addEdge(nbEd.toString(),n.getNodeId(),s);
 				nbEd++;
@@ -237,6 +239,9 @@ public class MapRepresentation implements Serializable {
 			this.viewer=null;
 		}
 	}
+
+
+
 
 	/**
 	 * Method called after a migration to reopen GUI components

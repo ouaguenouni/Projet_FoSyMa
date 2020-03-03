@@ -1,5 +1,3 @@
-package eu.su.mas.dedaleEtu.princ;
-
 import eu.su.mas.dedale.env.EnvironmentType;
 
 /**
@@ -59,6 +57,7 @@ public final class ConfigurationFile {
 	 */
 	//public static String INSTANCE_TOPOLOGY=null;
 	public static String INSTANCE_TOPOLOGY="resources/topology/map2018-topology-ica";
+	//public static String INSTANCE_TOPOLOGY="resources/topology/BinaryTree2";
 	//public static String INSTANCE_TOPOLOGY="resources/interlocking/mapInterlocking2-topology";
 	//public static String INSTANCE_TOPOLOGY="resources/HouatTopology";
 	//public static String INSTANCE_TOPOLOGY="resources/map2018-topology";
@@ -81,7 +80,9 @@ public final class ConfigurationFile {
 	/**
 	 * Must'nt be null as it describes the agents capabilities on the map
 	 */
-	public static String INSTANCE_CONFIGURATION_ENTITIES="resources/agentExplo";
+	//public static String INSTANCE_CONFIGURATION_ENTITIES="resources/agentExplo";
+	public static String INSTANCE_CONFIGURATION_ENTITIES="resources/agentExplo-2";
+	//public static String INSTANCE_CONFIGURATION_ENTITIES="resources/anyMap-hunt-1golem1agent-entities";
 	//public static String INSTANCE_CONFIGURATION_ENTITIES="resources/map2018-entities2";
 	//public static String INSTANCE_CONFIGURATION_ENTITIES="resources/map2019-entitiesExam1";
 	//public static String INSTANCE_CONFIGURATION_ENTITIES="resources/monoAgent-entities";
