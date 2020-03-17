@@ -179,8 +179,6 @@ public abstract class Abstract_Exploration_Behaviour extends SimpleBehaviour {
             finished = true;
         }
 
-        //System.out.println("Je suis  : "+myAgent.getLocalName()+" je veux aller en : "+next_pos+" et ça donne "+success);
-        //System.out.println("Ouverts de "+ myAgent.getLocalName()+" : "+ openNodes);
     }
 
 

@@ -39,6 +39,7 @@ public class General_Behaviour extends FSMBehaviour {
         String [] both = {"SHARING","EXPLORING"} ;
 
         this.registerTransition("EXPLORING","EXPLORING",0,exploring);
+
         this.registerTransition("EXPLORING","SHARING",1,both);
 
         this.registerTransition("EXPLORING","ENDEXPLORE",2);

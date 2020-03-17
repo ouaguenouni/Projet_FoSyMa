@@ -1,6 +1,7 @@
 package Agents;
 
 import Behaviours.Coordination_Behaviour.General_Behaviour;
+import Knowledge.Plans;
 import eu.su.mas.dedale.mas.agent.behaviours.RandomWalkBehaviour;
 import eu.su.mas.dedale.mas.agent.behaviours.startMyBehaviours;
 import jade.core.behaviours.Behaviour;
@@ -13,6 +14,8 @@ import java.util.HashSet;
 import java.util.List;
 
 public class Stupid_Agent extends Simple_Agent {
+
+    public Plans myPlan;
 
 
     protected void setup(){
