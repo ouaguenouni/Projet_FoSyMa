@@ -1,0 +1,15 @@
+Node = {a1,a2,a3,a4}
+
+type(Successeur(Node,Node))
+type(Open(Node))
+type(Closed(Node))
+type(Occuped(Node))
+type(Empty(Node))
+
+Open(a1)
+Closed(a3)
+Successeur(a1,a2)
+Successeur(a2,a3)
+Successeur(a2,a4)
+
+forall X:(forall Y:(forall Z:(Successeur(X,Y)&&Successeur(Y,Z) => Successeur(X,Z))))

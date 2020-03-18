@@ -1,6 +1,4 @@
-import Agents.DummyMovingAgent;
 import Agents.Simple_Agent;
-import Agents.Stupid_Agent;
 import eu.su.mas.dedale.mas.AbstractDedaleAgent;
 import eu.su.mas.dedale.mas.agents.GateKeeperAgent;
 import jade.core.Profile;
@@ -381,7 +379,7 @@ public class Principal {
 		Object [] entityParametersExplo1={"My parameters"};
 		
 		//4) Give the class name of your agent to let the system instantiate it
-		ag=createNewDedaleAgent(c, agentName, Stupid_Agent.class.getName(), entityParametersExplo1);//
+		ag=createNewDedaleAgent(c, agentName, Simple_Agent.class.getName(), entityParametersExplo1);//
 		agentList.add(ag);
 		
 //		/*********

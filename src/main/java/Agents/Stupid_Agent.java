@@ -15,7 +15,6 @@ import java.util.List;
 
 public class Stupid_Agent extends Simple_Agent {
 
-    public Plans myPlan;
 
 
     protected void setup(){
