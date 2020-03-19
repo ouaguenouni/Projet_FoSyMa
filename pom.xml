@@ -66,21 +66,6 @@
 		</dependency>
 
 		<dependency>
-			<groupId>net.sf.tweety</groupId>
-			<artifactId>tweety-full</artifactId>
-			<version>1.16</version>
-		</dependency>
-
-		<!-- https://mvnrepository.com/artifact/jpl/jpl -->
-		<dependency>
-			<groupId>jpl</groupId>
-			<artifactId>jpl</artifactId>
-			<version>7.4.0</version>
-		</dependency>
-
-
-
-		<dependency>
   			<groupId>org.openjfx</groupId>
   			<artifactId>javafx-graphics</artifactId>
   			<version>13.0.2</version>
@@ -110,6 +95,13 @@
 			<artifactId>javafx</artifactId>
 			<version>11</version>
 			<type>pom</type>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-math3 -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-math3</artifactId>
+			<version>3.6.1</version>
 		</dependency>
 
 

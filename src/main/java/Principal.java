@@ -1,4 +1,6 @@
+import Agents.DummyMovingAgent;
 import Agents.Planification_Agent;
+import Agents.Planification_Probabiliste_Agent;
 import Agents.Simple_Agent;
 import eu.su.mas.dedale.mas.AbstractDedaleAgent;
 import eu.su.mas.dedale.mas.agents.GateKeeperAgent;
@@ -399,7 +401,7 @@ public class Principal {
 		Object [] entityParametersExplo2={"My parameters"};
 
 		//4) Give the class name of your agent to let the system instantiate it
-		ag=createNewDedaleAgent(c, agentName, Planification_Agent.class.getName(), entityParametersExplo2);//ExploreSoloAgent
+		ag=createNewDedaleAgent(c, agentName, Planification_Probabiliste_Agent.class.getName(), entityParametersExplo2);//ExploreSoloAgent
 
 		agentList.add(ag);
 

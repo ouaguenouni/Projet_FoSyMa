@@ -33,11 +33,11 @@ public class General_Behaviour extends FSMBehaviour {
         this.registerState(TB,"HUNTING");
 
         this.registerFirstState(GEP,"EXPLORING");
-        String [] exploring = {"EXPLORING"} ;
+
         String [] sharing = {"SHARING"} ;
         String [] hunting = {"HUNTING"} ;
         String [] both = {"SHARING","EXPLORING"} ;
-
+        String [] exploring = {"EXPLORING"} ;
         this.registerTransition("EXPLORING","EXPLORING",0,exploring);
 
         this.registerTransition("EXPLORING","SHARING",1,both);

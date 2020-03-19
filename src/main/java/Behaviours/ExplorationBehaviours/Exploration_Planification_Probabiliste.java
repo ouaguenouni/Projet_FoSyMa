@@ -1,7 +1,7 @@
 package Behaviours.ExplorationBehaviours;
 
 import Agents.Planification_Agent;
-import dataStructures.tuple.Couple;
+import Agents.Planification_Probabiliste_Agent;
 import eu.su.mas.dedale.mas.AbstractDedaleAgent;
 import jade.core.behaviours.ParallelBehaviour;
 import org.graphstream.graph.Edge;
@@ -11,16 +11,16 @@ import org.graphstream.graph.Node;
 import java.util.*;
 
 
-public class Exploration_Planification extends Abstract_Exploration_Behaviour {
+public class Exploration_Planification_Probabiliste extends Abstract_Exploration_Behaviour {
 
     public ParallelBehaviour parallel_queue;
-    public Planification_Agent myAgent;
+    Planification_Probabiliste_Agent myAgent;
 
 
 
-    public Exploration_Planification(AbstractDedaleAgent myagent, ParallelBehaviour parallel_queue) {
+    public Exploration_Planification_Probabiliste(AbstractDedaleAgent myagent, ParallelBehaviour parallel_queue) {
         super(myagent);
-        this.myAgent = (Planification_Agent) myagent;
+        this.myAgent = (Planification_Probabiliste_Agent) myagent;
         this.parallel_queue = parallel_queue;
     }
 
@@ -62,14 +62,12 @@ public class Exploration_Planification extends Abstract_Exploration_Behaviour {
                 this.myAgent.values.put(i,10.0);
             }
             else{
-                System.out.println("Rez : "+this.myAgent.penality);
                 if(!(this.myAgent.penality.contains(i)))
                 {
                     this.myAgent.values.put(i,0.0);
                 }
             }
         }
-        System.out.println("Fin de l'initialisation avec : "+this.myAgent.values);
     }
 
     public void propagerValeurs(){
@@ -199,12 +197,32 @@ public class Exploration_Planification extends Abstract_Exploration_Behaviour {
         return meilleur;
     }
 
+    @Override
+    public void move() {
+        String next_pos = howToMove();
+        try{
+            boolean success = ((AbstractDedaleAgent)this.myAgent).moveTo(next_pos);
+            while(!success){
+                System.out.println("Je modifie : "+next_pos);
+                this.myAgent.penality.add(Integer.valueOf(next_pos));
+                this.myAgent.values.put(Integer.valueOf(next_pos),-10.0);
+                this.myAgent.plan_courant = new LinkedList<>();
+                System.out.println("Vecteur de pénalités : "+this.myAgent.penality);
+                next_pos = howToMove();
+                success = ((AbstractDedaleAgent)this.myAgent).moveTo(next_pos);
+                nearest_open_node = null;
+                Collections.shuffle(this.myAgent.openNodes);
+            }
+        }catch (RuntimeException E){
+            finished = true;
+        }
+    }
 
     @Override
     public String howToMove() {
 
         String myPosition=((AbstractDedaleAgent)this.myAgent).getCurrentPosition();
-
+        System.out.println("Observations : "+((AbstractDedaleAgent)this.myAgent).observe());
         String prochain_noeud = myPosition;
         if(this.myAgent.point_land == 0)
             this.myAgent.point_land = Integer.parseInt(myPosition);

@@ -24,7 +24,7 @@ public abstract class Abstract_Exploration_Behaviour extends SimpleBehaviour {
     protected boolean finished = false;
     protected String nearest_open_node = null;
     //TODO : Change this
-    protected Planification_Agent myAgent;
+    protected Simple_Agent myAgent;
     protected boolean stop = false;
 
     public Abstract_Exploration_Behaviour(final AbstractDedaleAgent myagent) {
@@ -156,7 +156,20 @@ public abstract class Abstract_Exploration_Behaviour extends SimpleBehaviour {
 
     public abstract String howToMove();
 
-
+    public void move(){
+        String next_pos = howToMove();
+        try{
+            boolean success = ((AbstractDedaleAgent)this.myAgent).moveTo(next_pos);
+            while(!success){
+                next_pos = howToMove();
+                success = ((AbstractDedaleAgent)this.myAgent).moveTo(next_pos);
+                nearest_open_node = null;
+                Collections.shuffle(this.myAgent.openNodes);
+            }
+        }catch (RuntimeException E){
+            finished = true;
+        }
+    }
 
     @Override
     public void action(){
@@ -165,28 +178,7 @@ public abstract class Abstract_Exploration_Behaviour extends SimpleBehaviour {
             if(SA.getActive_conversations().get(s) > 0)
                 SA.getActive_conversations().put(s,SA.getActive_conversations().get(s)-1);
         updateNodeStatu();
-        String next_pos = howToMove();
-
-        try{
-            boolean success = ((AbstractDedaleAgent)this.myAgent).moveTo(next_pos);
-            while(!success){
-                System.out.println("Je modifie : "+next_pos);
-                this.myAgent.penality.add(Integer.valueOf(next_pos));
-                this.myAgent.values.put(Integer.valueOf(next_pos),-10.0);
-                this.myAgent.plan_courant = new LinkedList<>();
-                System.out.println("Vecteur de pénalités : "+this.myAgent.penality);
-                next_pos = howToMove();
-                success = ((AbstractDedaleAgent)this.myAgent).moveTo(next_pos);
-                nearest_open_node = null;
-
-                //System.out.println("Je shuffle et donc");
-                //System.out.println("La liste deviens : "+this.myAgent.openNodes);
-                Collections.shuffle(this.myAgent.openNodes);
-            }
-        }catch (RuntimeException E){
-            finished = true;
-        }
-
+        move();
     }
 
 

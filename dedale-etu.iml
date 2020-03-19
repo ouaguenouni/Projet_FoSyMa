@@ -12,97 +12,13 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="JPL" level="project" />
+    <orderEntry type="library" name="jpl" level="application" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-web:13.0.2" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-web:linux:13.0.2" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-swing:13.0.2" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-swing:linux:13.0.2" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-media:13.0.2" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-media:linux:13.0.2" level="project" />
-    <orderEntry type="library" name="Maven: net.sf.tweety:tweety-full:1.16" level="project" />
-    <orderEntry type="library" name="Maven: net.sf.tweety:action:1.16" level="project" />
-    <orderEntry type="library" name="Maven: net.sf.tweety:agents:1.16" level="project" />
-    <orderEntry type="library" name="Maven: net.sf.tweety.agents:dialogues:1.16" level="project" />
-    <orderEntry type="library" name="Maven: net.sf.tweety.arg:aba:1.16" level="project" />
-    <orderEntry type="library" name="Maven: net.sf.tweety.arg:adf:1.16" level="project" />
-    <orderEntry type="library" name="Maven: net.sf.tweety.arg:bipolar:1.16" level="project" />
-    <orderEntry type="library" name="Maven: net.sf.tweety.arg:aspic:1.16" level="project" />
-    <orderEntry type="library" name="Maven: net.sf.tweety.arg:deductive:1.16" level="project" />
-    <orderEntry type="library" name="Maven: net.sf.tweety.arg:delp:1.16" level="project" />
-    <orderEntry type="library" name="Maven: args4j:args4j:2.0.26" level="project" />
-    <orderEntry type="library" name="Maven: net.sf.tweety.arg:dung:1.16" level="project" />
-    <orderEntry type="library" name="Maven: net.sf.tweety.arg:lp:1.16" level="project" />
-    <orderEntry type="library" name="Maven: net.sf.tweety.arg:prob:1.16" level="project" />
-    <orderEntry type="library" name="Maven: net.sf.tweety.arg:saf:1.16" level="project" />
-    <orderEntry type="library" name="Maven: net.sf.tweety.arg:social:1.16" level="project" />
-    <orderEntry type="library" name="Maven: net.sf.tweety.arg:rankings:1.16" level="project" />
-    <orderEntry type="library" name="Maven: net.sf.tweety:beliefdynamics:1.16" level="project" />
-    <orderEntry type="library" name="Maven: net.sf.tweety:cli:1.16" level="project" />
-    <orderEntry type="library" name="Maven: jspf:core:1.0.2" level="project" />
-    <orderEntry type="library" name="Maven: commons-configuration:commons-configuration:1.9" level="project" />
-    <orderEntry type="library" name="Maven: commons-lang:commons-lang:2.6" level="project" />
-    <orderEntry type="library" name="Maven: commons-logging:commons-logging:1.1.1" level="project" />
-    <orderEntry type="library" name="Maven: net.sf.tweety:commons:1.16" level="project" />
-    <orderEntry type="library" name="Maven: ch.qos.logback:logback-core:0.9.30" level="project" />
-    <orderEntry type="library" name="Maven: ch.qos.logback:logback-classic:0.9.30" level="project" />
-    <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.6.2" level="project" />
-    <orderEntry type="library" name="Maven: org.slf4j:slf4j-log4j12:1.7.26" level="project" />
-    <orderEntry type="library" name="Maven: log4j:log4j:1.2.17" level="project" />
-    <orderEntry type="library" name="Maven: net.sf.tweety:graphs:1.16" level="project" />
-    <orderEntry type="library" name="Maven: gov.nist.math:jama:1.0.3" level="project" />
-    <orderEntry type="library" name="Maven: net.sf.tweety.logics:cl:1.16" level="project" />
-    <orderEntry type="library" name="Maven: net.sf.tweety.logics:commons:1.16" level="project" />
-    <orderEntry type="library" name="Maven: net.sf.tweety.logics:dl:1.16" level="project" />
-    <orderEntry type="library" name="Maven: net.sf.tweety.logics:fol:1.16" level="project" />
-    <orderEntry type="library" name="Maven: net.sf.tweety.logics:ml:1.16" level="project" />
-    <orderEntry type="library" name="Maven: net.sf.tweety.logics:mln:1.16" level="project" />
-    <orderEntry type="library" name="Maven: net.sf.tweety.logics:pcl:1.16" level="project" />
-    <orderEntry type="library" name="Maven: net.sf.tweety.logics:pl:1.16" level="project" />
-    <orderEntry type="library" name="Maven: org.ow2.sat4j:org.ow2.sat4j.core:2.3.4" level="project" />
-    <orderEntry type="library" name="Maven: net.sf.tweety.logics:qbf:1.16" level="project" />
-    <orderEntry type="library" name="Maven: net.sf.tweety.logics:rcl:1.16" level="project" />
-    <orderEntry type="library" name="Maven: net.sf.tweety.logics:rdl:1.16" level="project" />
-    <orderEntry type="library" name="Maven: net.sf.tweety.logics:rpcl:1.16" level="project" />
-    <orderEntry type="library" name="Maven: net.sf.tweety.logics:translators:1.16" level="project" />
-    <orderEntry type="library" name="Maven: net.sf.tweety.lp:asp:1.16" level="project" />
-    <orderEntry type="library" name="Maven: net.sf.tweety.lp.asp:beliefdynamics:1.16" level="project" />
-    <orderEntry type="library" name="Maven: net.sf.tweety.lp:nlp:1.16" level="project" />
-    <orderEntry type="library" name="Maven: net.sf.tweety:machinelearning:1.16" level="project" />
-    <orderEntry type="library" name="Maven: tw.edu.ntu.csie:libsvm:3.17" level="project" />
-    <orderEntry type="library" name="Maven: net.sf.tweety:math:1.16" level="project" />
-    <orderEntry type="library" name="Maven: org.ojalgo:ojalgo:35.0" level="project" />
-    <orderEntry type="library" name="Maven: com.dbtsai.lbfgs:lbfgs:0.1" level="project" />
-    <orderEntry type="library" name="Maven: org.scala-lang:scala-library:2.10.3" level="project" />
-    <orderEntry type="library" name="Maven: net.sf.tweety:plugin:1.16" level="project" />
-    <orderEntry type="library" name="Maven: net.sf.tweety:preferences:1.16" level="project" />
-    <orderEntry type="library" name="Maven: net.sf.tweety:web:1.16" level="project" />
-    <orderEntry type="library" name="Maven: org.glassfish.jersey.containers:jersey-container-grizzly2-http:2.29" level="project" />
-    <orderEntry type="library" name="Maven: org.glassfish.hk2.external:jakarta.inject:2.5.0" level="project" />
-    <orderEntry type="library" name="Maven: org.glassfish.grizzly:grizzly-http-server:2.4.4" level="project" />
-    <orderEntry type="library" name="Maven: org.glassfish.grizzly:grizzly-http:2.4.4" level="project" />
-    <orderEntry type="library" name="Maven: org.glassfish.grizzly:grizzly-framework:2.4.4" level="project" />
-    <orderEntry type="library" name="Maven: org.glassfish.jersey.core:jersey-common:2.29" level="project" />
-    <orderEntry type="library" name="Maven: jakarta.annotation:jakarta.annotation-api:1.3.4" level="project" />
-    <orderEntry type="library" name="Maven: org.glassfish.hk2:osgi-resource-locator:1.0.3" level="project" />
-    <orderEntry type="library" name="Maven: com.sun.activation:jakarta.activation:1.2.1" level="project" />
-    <orderEntry type="library" name="Maven: org.glassfish.jersey.core:jersey-server:2.29" level="project" />
-    <orderEntry type="library" name="Maven: org.glassfish.jersey.core:jersey-client:2.29" level="project" />
-    <orderEntry type="library" name="Maven: javax.validation:validation-api:2.0.1.Final" level="project" />
-    <orderEntry type="library" name="Maven: jakarta.ws.rs:jakarta.ws.rs-api:2.1.5" level="project" />
-    <orderEntry type="library" name="Maven: org.glassfish.jersey.media:jersey-media-json-jettison:2.29" level="project" />
-    <orderEntry type="library" name="Maven: org.glassfish.jersey.media:jersey-media-jaxb:2.29" level="project" />
-    <orderEntry type="library" name="Maven: org.codehaus.jettison:jettison:1.3.7" level="project" />
-    <orderEntry type="library" name="Maven: jakarta.xml.bind:jakarta.xml.bind-api:2.3.2" level="project" />
-    <orderEntry type="library" name="Maven: jakarta.activation:jakarta.activation-api:1.2.1" level="project" />
-    <orderEntry type="library" name="Maven: org.glassfish.jersey.inject:jersey-hk2:2.29" level="project" />
-    <orderEntry type="library" name="Maven: org.glassfish.hk2:hk2-locator:2.5.0" level="project" />
-    <orderEntry type="library" name="Maven: org.glassfish.hk2.external:aopalliance-repackaged:2.5.0" level="project" />
-    <orderEntry type="library" name="Maven: org.glassfish.hk2:hk2-api:2.5.0" level="project" />
-    <orderEntry type="library" name="Maven: org.glassfish.hk2:hk2-utils:2.5.0" level="project" />
-    <orderEntry type="library" name="Maven: org.javassist:javassist:3.22.0-CR2" level="project" />
-    <orderEntry type="library" name="Maven: com.sun.xml.bind:jaxb-impl:2.3.0.1" level="project" />
-    <orderEntry type="library" name="Maven: javax.activation:activation:1.1.1" level="project" />
-    <orderEntry type="library" name="Maven: com.sun.xml.bind:jaxb-core:2.3.0.1" level="project" />
-    <orderEntry type="library" name="Maven: jpl:jpl:7.4.0" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-graphics:13.0.2" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-graphics:linux:13.0.2" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-fxml:13.0.2" level="project" />
@@ -111,11 +27,11 @@
     <orderEntry type="library" name="Maven: org.openjfx:javafx-controls:linux:13.0.2" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-base:13.0.2" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-base:linux:13.0.2" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.commons:commons-math3:3.6.1" level="project" />
     <orderEntry type="library" name="Maven: com.tilab.jade:jade:4.5.0" level="project" />
     <orderEntry type="library" name="Maven: commons-codec:commons-codec:1.3" level="project" />
     <orderEntry type="library" name="Maven: com.github.graphstream:gs-algo:2.0-alpha" level="project" />
     <orderEntry type="library" name="Maven: org.apache.commons:commons-math:2.1" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.commons:commons-math3:3.4.1" level="project" />
     <orderEntry type="library" name="Maven: org.jfree:jfreechart:1.0.14" level="project" />
     <orderEntry type="library" name="Maven: org.jfree:jcommon:1.0.17" level="project" />
     <orderEntry type="library" name="Maven: xml-apis:xml-apis:1.3.04" level="project" />
@@ -157,6 +73,5 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="jpl" level="application" />
   </component>
 </module>
