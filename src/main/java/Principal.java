@@ -1,4 +1,5 @@
 import Agents.Planification_Agent;
+import Agents.Probabiliste_Agent;
 import eu.su.mas.dedale.mas.AbstractDedaleAgent;
 import eu.su.mas.dedale.mas.agents.GateKeeperAgent;
 import jade.core.Profile;

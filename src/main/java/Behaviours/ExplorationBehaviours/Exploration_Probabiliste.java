@@ -1,7 +1,7 @@
 package Behaviours.ExplorationBehaviours;
 
 import Agents.Planification_Agent;
-import dataStructures.tuple.Couple;
+import Agents.Probabiliste_Agent;
 import eu.su.mas.dedale.mas.AbstractDedaleAgent;
 import jade.core.behaviours.ParallelBehaviour;
 import org.graphstream.graph.Edge;
@@ -11,16 +11,16 @@ import org.graphstream.graph.Node;
 import java.util.*;
 
 
-public class Exploration_Planification extends Abstract_Exploration_Behaviour {
+public class Exploration_Probabiliste extends Abstract_Exploration_Behaviour {
 
     public ParallelBehaviour parallel_queue;
-    public Planification_Agent myAgent;
+    public Probabiliste_Agent myAgent;
 
 
 
-    public Exploration_Planification(AbstractDedaleAgent myagent, ParallelBehaviour parallel_queue) {
+    public Exploration_Probabiliste(AbstractDedaleAgent myagent, ParallelBehaviour parallel_queue) {
         super(myagent);
-        this.myAgent = (Planification_Agent) myagent;
+        this.myAgent = (Probabiliste_Agent) myagent;
         this.parallel_queue = parallel_queue;
     }
 
@@ -57,13 +57,13 @@ public class Exploration_Planification extends Abstract_Exploration_Behaviour {
 
     public void intialiserValeurs(){
         for(Integer i : this.myAgent.values.keySet()){
-            if(!(this.myAgent.penality.contains(i)) && myAgent.openNodes.contains(i+""))
+            if(!(this.myAgent.model.distribution.get(i) == 1.0) && myAgent.openNodes.contains(i+""))
             {
                 this.myAgent.values.put(i,10.0);
             }
             else{
-                //System.out.println("Rez : "+this.myAgent.penality);
-                if(!(this.myAgent.penality.contains(i)))
+                System.out.println("Rez : "+this.myAgent.penality);
+                if(!(this.myAgent.model.distribution.get(i) == 1.0))
                 {
                     this.myAgent.values.put(i,0.0);
                 }
@@ -72,7 +72,7 @@ public class Exploration_Planification extends Abstract_Exploration_Behaviour {
                 }
             }
         }
-        //System.out.println("Fin de l'initialisation avec : "+this.myAgent.values);
+        System.out.println("Fin de l'initialisation avec : "+this.myAgent.values);
     }
 
     public void propagerValeurs(){
@@ -89,7 +89,7 @@ public class Exploration_Planification extends Abstract_Exploration_Behaviour {
             }
             //System.out.println("Penality = "+penality);
             //System.out.println("Values : "+values);
-            if((m > this.myAgent.values.get(i)) && !this.myAgent.penality.contains(i))
+            if((m > this.myAgent.values.get(i)) && this.myAgent.model.distribution.get(i) != 1.0)
                 this.myAgent.values.put(i,m);
         }
     }
@@ -204,10 +204,12 @@ public class Exploration_Planification extends Abstract_Exploration_Behaviour {
 
     public void move(){
         String next_pos = howToMove();
+        this.myAgent.model.updateModele(this.myAgent.successeurs, Integer.parseInt(this.myAgent.getCurrentPosition()));
         try{
             boolean success = ((AbstractDedaleAgent)this.myAgent).moveTo(next_pos);
             while(!success){
                 this.myAgent.penality.add(Integer.valueOf(next_pos));
+                this.myAgent.model.setDistribution(Integer.parseInt(next_pos),Integer.parseInt(this.myAgent.getCurrentPosition()));
                 next_pos = howToMove();
                 success = ((AbstractDedaleAgent)this.myAgent).moveTo(next_pos);
                 nearest_open_node = null;
@@ -244,6 +246,7 @@ public class Exploration_Planification extends Abstract_Exploration_Behaviour {
         System.out.println("Plan courant : "+this.myAgent.plan_courant);
         if(this.myAgent.plan_courant.size() == 0)
         {
+            System.out.println("VIDE !!!!! ");
             LinkedList<Integer> L = new LinkedList<>(this.myAgent.successeurs.get(Integer.valueOf(myPosition)));
             prochain_noeud = L.get(0).toString();
         }

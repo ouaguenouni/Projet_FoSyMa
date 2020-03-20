@@ -56,8 +56,8 @@ public final class ConfigurationFile {
 	 * Not null when the environment is loaded; should be null if the environment is generated or already online
 	 */
 	//public static String INSTANCE_TOPOLOGY=null;
-	//public static String INSTANCE_TOPOLOGY="resources/topology/map2018-topology-ica";
-	public static String INSTANCE_TOPOLOGY="resources/topology/BinaryTree2";
+	public static String INSTANCE_TOPOLOGY="resources/topology/map2018-topology-ica";
+	//public static String INSTANCE_TOPOLOGY="resources/topology/BinaryTree2";
 	//public static String INSTANCE_TOPOLOGY="resources/interlocking/mapInterlocking2-topology";
 	//public static String INSTANCE_TOPOLOGY="resources/HouatTopology";
 	//public static String INSTANCE_TOPOLOGY="resources/map2018-topology";

@@ -2,6 +2,7 @@ package Behaviours.Coordination_Behaviour;
 
 import Agents.Simple_Agent;
 import Behaviours.ExplorationBehaviours.Exploration_Planification;
+import Behaviours.ExplorationBehaviours.Exploration_Probabiliste;
 import Behaviours.ExplorationBehaviours.broadcast_Rdv;
 import Behaviours.Hunting_Behaviour.detectingWumpusBehaviour;
 import Behaviours.MapSharing.respondingPing;
