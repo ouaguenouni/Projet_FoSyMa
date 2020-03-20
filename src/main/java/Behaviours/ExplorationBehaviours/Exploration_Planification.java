@@ -67,6 +67,9 @@ public class Exploration_Planification extends Abstract_Exploration_Behaviour {
                 {
                     this.myAgent.values.put(i,0.0);
                 }
+                else{
+                    this.myAgent.values.put(i,-10.0);
+                }
             }
         }
         System.out.println("Fin de l'initialisation avec : "+this.myAgent.values);
@@ -126,7 +129,7 @@ public class Exploration_Planification extends Abstract_Exploration_Behaviour {
             if(possibilites == null)
                 return plans;
             //On calcule la valeur maximale des successeurs qui ne sont pas explorés pour pas créer de cycles
-            double max = -100;
+            double max = -5;
             //Cette variable sert a ce que si le noeud n'a pas de successeurs non explorés ce qui signie que le chemin est fini on l'ajoute au plans
             boolean no_successors = true;
             for (Integer possibilite : possibilites) {
@@ -197,6 +200,23 @@ public class Exploration_Planification extends Abstract_Exploration_Behaviour {
             }
         }
         return meilleur;
+    }
+
+    public void move(){
+        String next_pos = howToMove();
+        try{
+            boolean success = ((AbstractDedaleAgent)this.myAgent).moveTo(next_pos);
+            while(!success){
+                this.myAgent.penality.add(Integer.valueOf(next_pos));
+                next_pos = howToMove();
+                success = ((AbstractDedaleAgent)this.myAgent).moveTo(next_pos);
+                nearest_open_node = null;
+                Collections.shuffle(this.myAgent.openNodes);
+            }
+        }catch (RuntimeException E){
+            finished = true;
+        }
+        //this.myAgent.penality.clear();
     }
 
 

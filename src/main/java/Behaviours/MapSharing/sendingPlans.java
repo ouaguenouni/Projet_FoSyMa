@@ -86,9 +86,9 @@ public class sendingPlans extends SimpleBehaviour {
         {
             received = true;
             String content = msg.getContent();
-            System.out.println("J'ai reçu une maapeuuuh ");
+            //System.out.println("J'ai reçu une maapeuuuh ");
             Simple_Agent SA = (Simple_Agent) myAgent;
-            System.out.println("EXPLORATORY BEHAVIOUR : "+SA.getExploratory_behaviour());
+            //System.out.println("EXPLORATORY BEHAVIOUR : "+SA.getExploratory_behaviour());
             SA.getExploratory_behaviour().updateWithKnowledg((JSONObject) JSONValue.parse(msg.getContent()));
             ACLMessage msg2 = new ACLMessage(ACLMessage.CONFIRM);
             msg2.setSender(myAgent.getAID());
@@ -102,7 +102,7 @@ public class sendingPlans extends SimpleBehaviour {
 
     @Override
     public void action() {
-        System.out.println("On rentre dans sending plans :"+myAgent.getLocalName()+" sachant que sended, received, et akc valent "+sended+received+acknoledged+ " et tryout = " + tyyouts);
+        //System.out.println("On rentre dans sending plans :"+myAgent.getLocalName()+" sachant que sended, received, et akc valent "+sended+received+acknoledged+ " et tryout = " + tyyouts);
         sendMap();
         lookForAck();
         receivingMap();
@@ -152,11 +152,11 @@ public class sendingPlans extends SimpleBehaviour {
             i = 1;
         if(tyyouts > 100)
         {
-            System.out.println("Normalement je suis débloqué par le tryouts");
+            //System.out.println("Normalement je suis débloqué par le tryouts");
             tyyouts = 0;
             return 2;
         }
-        System.out.println("Le on end de l'envoie des plans renvoie : "+i);
+        //System.out.println("Le on end de l'envoie des plans renvoie : "+i);
         return i;
     }
 

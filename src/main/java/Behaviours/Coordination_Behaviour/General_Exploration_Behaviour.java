@@ -2,8 +2,6 @@ package Behaviours.Coordination_Behaviour;
 
 import Agents.Simple_Agent;
 import Behaviours.ExplorationBehaviours.Exploration_Planification;
-import Behaviours.ExplorationBehaviours.Exploration_Planification_Probabiliste;
-import Behaviours.ExplorationBehaviours.Explore_Multi_Behaviour;
 import Behaviours.ExplorationBehaviours.broadcast_Rdv;
 import Behaviours.Hunting_Behaviour.detectingWumpusBehaviour;
 import Behaviours.MapSharing.respondingPing;
@@ -18,7 +16,7 @@ public class General_Exploration_Behaviour extends ParallelBehaviour {
     private sendingPing sendiing_ping_behaviour;
     private broadcast_Rdv broadcast_rdv_behaviour;
     private detectingWumpusBehaviour detectingWumpusBehaviour;
-    private Exploration_Planification_Probabiliste exploration_behaviour;
+    private Exploration_Planification exploration_behaviour;
 
     public General_Exploration_Behaviour(AbstractDedaleAgent myAgent,int param)
     {
@@ -27,7 +25,7 @@ public class General_Exploration_Behaviour extends ParallelBehaviour {
         responding_ping_behaviour = new respondingPing(this.myAgent,150);
         sendiing_ping_behaviour = new sendingPing(this.myAgent,150);
         broadcast_rdv_behaviour = new broadcast_Rdv(myAgent,150);
-        exploration_behaviour = new Exploration_Planification_Probabiliste(this.myAgent,this);
+        exploration_behaviour = new Exploration_Planification(this.myAgent,this);
         detectingWumpusBehaviour = new detectingWumpusBehaviour(this.myAgent);
         this.addSubBehaviour(responding_ping_behaviour);
         this.addSubBehaviour(broadcast_rdv_behaviour);
@@ -39,7 +37,7 @@ public class General_Exploration_Behaviour extends ParallelBehaviour {
 
     @Override
     public int onEnd() {
-        System.out.println("Le on end renvoie : "+responding_ping_behaviour.onEnd());
+        //System.out.println("Le on end renvoie : "+responding_ping_behaviour.onEnd());
         int m = Math.max(responding_ping_behaviour.onEnd(),exploration_behaviour.onEnd());
         return Math.max(m,detectingWumpusBehaviour.onEnd());
     }

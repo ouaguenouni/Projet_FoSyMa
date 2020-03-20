@@ -26,7 +26,7 @@ public class creatingConversation extends SimpleBehaviour {
         ACLMessage msg = myAgent.receive(tem);
         if(msg != null)
         {
-            System.out.println("Je suis "+myAgent.getLocalName()+" J'ai réçu une réponse de ping donc je crée une conv");
+            //System.out.println("Je suis "+myAgent.getLocalName()+" J'ai réçu une réponse de ping donc je crée une conv");
             boolean b = this.myAgent.createConversation(msg.getSender().getLocalName(),4);
             if(b)
                 myAgent.addBehaviour(new sendingPlans(myAgent,msg.getSender().getLocalName()));

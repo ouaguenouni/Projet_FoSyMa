@@ -30,7 +30,7 @@ public class respondingPing extends WakerBehaviour {
             //System.out.println("Création d'une conversation : "+b);
             if(b)
             {
-                System.out.println("Je suis "+myAgent.getLocalName()+" je réponds a : "+ms.getSender().getLocalName());
+                //System.out.println("Je suis "+myAgent.getLocalName()+" je réponds a : "+ms.getSender().getLocalName());
                 /*ACLMessage msg2 = new ACLMessage(ACLMessage.AGREE);
                 msg2.setConversationId(Double.toString(d));
                 msg2.setSender(this.myAgent.getAID());

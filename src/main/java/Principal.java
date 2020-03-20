@@ -1,7 +1,4 @@
-import Agents.DummyMovingAgent;
 import Agents.Planification_Agent;
-import Agents.Planification_Probabiliste_Agent;
-import Agents.Simple_Agent;
 import eu.su.mas.dedale.mas.AbstractDedaleAgent;
 import eu.su.mas.dedale.mas.agents.GateKeeperAgent;
 import jade.core.Profile;
@@ -374,13 +371,13 @@ public class Principal {
 		//1) Get the container where the agent will appear
 		c = containerList.get(ConfigurationFile.LOCAL_CONTAINER2_NAME);
 		Assert.assertNotNull("This container does not exist",c);
-		
+
 		//2) Give the name of your agent, MUST be the same as the one given in the entities file.
 		agentName="Explo1";
-		
+
 		//3) If you want to give specific parameters to your agent, add them here
 		Object [] entityParametersExplo1={"My parameters"};
-		
+
 		//4) Give the class name of your agent to let the system instantiate it
 		ag=createNewDedaleAgent(c, agentName, Planification_Agent.class.getName(), entityParametersExplo1);//
 		agentList.add(ag);
@@ -401,7 +398,7 @@ public class Principal {
 		Object [] entityParametersExplo2={"My parameters"};
 
 		//4) Give the class name of your agent to let the system instantiate it
-		ag=createNewDedaleAgent(c, agentName, Planification_Probabiliste_Agent.class.getName(), entityParametersExplo2);//ExploreSoloAgent
+		ag=createNewDedaleAgent(c, agentName, Planification_Agent.class.getName(), entityParametersExplo2);//ExploreSoloAgent
 
 		agentList.add(ag);
 
