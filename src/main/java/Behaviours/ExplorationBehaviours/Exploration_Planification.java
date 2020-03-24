@@ -1,7 +1,10 @@
 package Behaviours.ExplorationBehaviours;
 
 import Agents.Planification_Agent;
+import Knowledge.Map_Representation;
+import Knowledge.MarkovModel.Markov_Model;
 import dataStructures.tuple.Couple;
+import eu.su.mas.dedale.env.Observation;
 import eu.su.mas.dedale.mas.AbstractDedaleAgent;
 import jade.core.behaviours.ParallelBehaviour;
 import org.graphstream.graph.Edge;
@@ -16,7 +19,8 @@ public class Exploration_Planification extends Abstract_Exploration_Behaviour {
     public ParallelBehaviour parallel_queue;
     public Planification_Agent myAgent;
 
-
+    LinkedList<Integer> puanteur = new LinkedList<>();
+    Markov_Model wumpus_monitoring = null;
 
     public Exploration_Planification(AbstractDedaleAgent myagent, ParallelBehaviour parallel_queue) {
         super(myagent);
@@ -55,9 +59,26 @@ public class Exploration_Planification extends Abstract_Exploration_Behaviour {
 
     }
 
+    public boolean golemPotentiel(){
+        return false;
+    }
+
+
     public void intialiserValeurs(){
         for(Integer i : this.myAgent.values.keySet()){
-            if(!(this.myAgent.penality.contains(i)) && myAgent.openNodes.contains(i+""))
+            if(this.myAgent.penality.contains(i))
+            {
+                this.myAgent.values.put(i,-10.0);
+                continue;
+            }
+            else{
+                if(wumpus_monitoring.distribution.containsKey(i) && wumpus_monitoring.distribution.get(i) > 0)
+                {
+                    this.myAgent.values.put(i,10000.0);
+                    continue;
+                }
+            }
+            if( myAgent.openNodes.contains(i+""))
             {
                 this.myAgent.values.put(i,10.0);
             }
@@ -202,20 +223,86 @@ public class Exploration_Planification extends Abstract_Exploration_Behaviour {
         return meilleur;
     }
 
+
+
+    public void influerValeurOdeur(){
+        String myPosition = this.myAgent.getCurrentPosition();
+        List<Couple<String, List<Couple<Observation, Integer>>>> lobs = ((AbstractDedaleAgent) this.myAgent).observe();
+        Map_Representation m = this.myAgent.getMap();
+        if(m == null)
+        {
+            this.myAgent.setMap(new Map_Representation());
+            m = this.myAgent.getMap();
+        }
+        Node n = m.getG().getNode(myPosition);
+        puanteur.clear();
+        if(n!=null)
+        {
+            for (Couple<String, List<Couple<Observation,Integer>>> c:lobs){
+                {
+                    if(c.getRight().size() > 0)
+                    {
+                        if(c.getRight().get(0).getLeft().getName().equals("Stench"))
+                        {
+                            System.out.println("Je sens quelque chose de "+c.getLeft());
+                            puanteur.add(Integer.valueOf(c.getLeft()));
+                            wumpus_monitoring.setDistributionWumpus(Integer.parseInt(c.getLeft()),Integer.parseInt(myPosition));
+                            this.myAgent.plan_courant.clear();
+                            this.myAgent.plans.clear();
+                            System.out.println("Distribution du wumpus : "+wumpus_monitoring.distribution);
+                            System.out.println();
+
+                        }
+                    }
+
+                }
+            }
+        }
+        if(puanteur.isEmpty())
+        {
+            //wumpus_monitoring.setDistributionWumpus(-1,Integer.parseInt(myPosition));
+            Scanner sc = new Scanner(System.in);
+            //sc.nextLine();
+        }
+    }
+
     public void move(){
+        updateStructurePlanification();
+        if(wumpus_monitoring == null)
+            wumpus_monitoring = new Markov_Model(this.myAgent.successeurs);
+        if(!wumpus_monitoring.nodePresent(this.myAgent.successeurs))
+            wumpus_monitoring.updateModele(this.myAgent.successeurs,-1);
+        if(this.wumpus_monitoring.distribution.keySet().isEmpty())
+            wumpus_monitoring.setDistributionWumpus(-1,Integer.parseInt(this.myAgent.getCurrentPosition()));
+        influerValeurOdeur();
+
+
+        intialiserValeurs();
+        System.out.println("Du coup les valeurs sont :"+this.myAgent.values);
+        Scanner sc = new Scanner(System.in);
+
+        //sc.nextLine();
         String next_pos = howToMove();
         try{
             boolean success = ((AbstractDedaleAgent)this.myAgent).moveTo(next_pos);
+            System.out.println("Aprés calcul l'agent décide de bouger vers"+next_pos);
+
+            //sc.nextLine();
             while(!success){
                 this.myAgent.penality.add(Integer.valueOf(next_pos));
+                updateStructurePlanification();
+                //influerValeurOdeur();
+                intialiserValeurs();
                 next_pos = howToMove();
                 success = ((AbstractDedaleAgent)this.myAgent).moveTo(next_pos);
                 nearest_open_node = null;
                 Collections.shuffle(this.myAgent.openNodes);
             }
+            puanteur.clear();
         }catch (RuntimeException E){
             finished = true;
         }
+        wumpus_monitoring.avancerDansLeTemps();
         //this.myAgent.penality.clear();
     }
 
@@ -224,37 +311,37 @@ public class Exploration_Planification extends Abstract_Exploration_Behaviour {
     public String howToMove() {
 
         String myPosition=((AbstractDedaleAgent)this.myAgent).getCurrentPosition();
-
         String prochain_noeud = myPosition;
         if(this.myAgent.point_land == 0)
             this.myAgent.point_land = Integer.parseInt(myPosition);
         if(this.myAgent.plan_courant.isEmpty())
         {
             this.myAgent.plans.clear();
-            updateStructurePlanification();
-            intialiserValeurs();
             calculerPlans();
             genererPlans(Integer.parseInt(myPosition));
+            System.out.println("Valeurs : "+this.myAgent.values);
+            System.out.println("Pénalités : "+this.myAgent.penality);
+            System.out.println("Plans calculés part de "+myPosition+" : "+this.myAgent.plans);
             this.myAgent.plan_courant = this.myAgent.plans.getFirst();
-            System.out.println("Plan calculé : "+this.myAgent.plan_courant);
+            System.out.println("Plan séléctionné : "+this.myAgent.plan_courant);
             this.myAgent.plan_courant.removeFirst();
         }
-        System.out.println("=====================Position : "+myPosition);
-        System.out.println("Successerus de la position : "+this.myAgent.successeurs.get(Integer.valueOf(myPosition)));
-        System.out.println("Plan courant : "+this.myAgent.plan_courant);
+        //System.out.println("=====================Position : "+myPosition);
+        //System.out.println("Successerus de la position : "+this.myAgent.successeurs.get(Integer.valueOf(myPosition)));
+        //System.out.println("Plan courant : "+this.myAgent.plan_courant);
         if(this.myAgent.plan_courant.size() == 0)
         {
             LinkedList<Integer> L = new LinkedList<>(this.myAgent.successeurs.get(Integer.valueOf(myPosition)));
             prochain_noeud = L.get(0).toString();
+            System.out.println("Size = 0 donc par défaut on prend "+prochain_noeud);
+
         }
         else
         {
+            System.out.println("Prochain noeud pris : "+prochain_noeud);
             prochain_noeud = String.valueOf(this.myAgent.plan_courant.getFirst());
             this.myAgent.plan_courant.removeFirst();
         }
-
-
-        System.out.println("Noeud suivant : "+prochain_noeud);
         this.myAgent.penality.clear();
         return prochain_noeud;
     }

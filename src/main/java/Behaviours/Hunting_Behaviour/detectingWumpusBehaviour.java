@@ -40,7 +40,8 @@ public class detectingWumpusBehaviour extends SimpleBehaviour {
                     {
                         if(c.getRight().get(0).getLeft().getName().equals("Stench"))
                         {
-                            found = true;
+                            //TODO Attention j'ai désacrivé ça
+                            found = false;
                         }
                     }
 

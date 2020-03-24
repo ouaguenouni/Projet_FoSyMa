@@ -52,6 +52,24 @@ public class Markov_Model implements Serializable {
         }
     }
 
+    public void setDistributionWumpus(int position_odorante,int my_position){
+        if(noeuds.contains(position_odorante )){
+            for (Integer j:noeuds)
+                if(successeurs.get(position_odorante).contains(j))
+                    distribution.put(j,1.0/successeurs.get(position_odorante).size());
+                else
+                    distribution.put(j,0.0);
+        }else
+        {
+            for (Integer i:noeuds)
+            {
+                distribution.put(i,0.0);
+            }
+        }
+        distribution.put(my_position,0.0);
+    }
+
+
     public boolean nodePresent(HashMap<Integer,HashSet<Integer>> successeurs){
         HashSet<Integer> nodes = new HashSet<>();
         nodes.addAll(successeurs.keySet());
@@ -84,7 +102,8 @@ public class Markov_Model implements Serializable {
                 noeuds.addAll(successeurs.get(i));
             }
             this.distribution = new HashMap<>();
-            setDistribution(-1,ma_position);
+            //Todo : Remember to let this permanent
+            //setDistribution(-1,ma_position);
         }
     }
 
