@@ -59,7 +59,7 @@ public class Exploration_Probabiliste extends Abstract_Exploration_Behaviour {
         for(Integer i : this.myAgent.values.keySet()){
             if(!(this.myAgent.model.distribution.get(i) == 1.0) && myAgent.openNodes.contains(i+""))
             {
-                this.myAgent.values.put(i,10.0);
+                this.myAgent.values.put(i,10.0-10*this.myAgent.model.distribution.get(i));
             }
             else{
                 System.out.println("Rez : "+this.myAgent.penality);
@@ -204,6 +204,7 @@ public class Exploration_Probabiliste extends Abstract_Exploration_Behaviour {
 
     public void move(){
         String next_pos = howToMove();
+        this.myAgent.model.avancerDansLeTemps();
         this.myAgent.model.updateModele(this.myAgent.successeurs, Integer.parseInt(this.myAgent.getCurrentPosition()));
         try{
             boolean success = ((AbstractDedaleAgent)this.myAgent).moveTo(next_pos);
@@ -226,7 +227,6 @@ public class Exploration_Probabiliste extends Abstract_Exploration_Behaviour {
     public String howToMove() {
 
         String myPosition=((AbstractDedaleAgent)this.myAgent).getCurrentPosition();
-
         String prochain_noeud = myPosition;
         if(this.myAgent.point_land == 0)
             this.myAgent.point_land = Integer.parseInt(myPosition);

@@ -61,6 +61,20 @@ public class Markov_Model implements Serializable {
         return this.noeuds.containsAll(nodes);
     }
 
+    public void avancerDansLeTemps(){
+        HashMap<Integer,Double> n_distribution = new HashMap<>();
+        for (Integer n:successeurs.keySet())
+        {
+            double d = 0;
+            for (Integer i:successeurs.get(n))
+            {
+                d = d + distribution.get(i) * getTransition(i,n);
+            }
+            n_distribution.put(n,d);
+        }
+        distribution = n_distribution;
+    }
+
     public void updateModele(HashMap<Integer,HashSet<Integer>> successeurs,int ma_position){
         if(!nodePresent(successeurs))
         {
