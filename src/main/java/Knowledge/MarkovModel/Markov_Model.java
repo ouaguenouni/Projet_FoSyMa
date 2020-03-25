@@ -9,6 +9,7 @@ import java.util.LinkedList;
 
 public class Markov_Model implements Serializable {
     public HashMap<Integer,Double> distribution = new HashMap<>();
+    public HashMap<String,HashMap<Integer,Double>> evidences = new HashMap<>();
     public HashMap<Integer, HashSet<Integer>> successeurs;
     public HashSet<Integer> noeuds = new HashSet<>();
 
@@ -54,9 +55,10 @@ public class Markov_Model implements Serializable {
 
     public void setDistributionWumpus(int position_odorante,int my_position){
         if(noeuds.contains(position_odorante )){
+            //distribution.put(position_odorante,1.0/(successeurs.get(position_odorante).size()-1));
             for (Integer j:noeuds)
                 if(successeurs.get(position_odorante).contains(j))
-                    distribution.put(j,1.0/successeurs.get(position_odorante).size());
+                    distribution.put(j,1.0/(successeurs.get(position_odorante).size()-1));
                 else
                     distribution.put(j,0.0);
         }else

@@ -149,6 +149,8 @@ public class Plans implements Serializable {
         run();
     }
 
+
+
     public void addNode(String id){
         Node n;
         System.out.println("Graphe = "+this.graph);

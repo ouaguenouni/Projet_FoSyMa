@@ -74,7 +74,7 @@ public class Exploration_Planification extends Abstract_Exploration_Behaviour {
             else{
                 if(wumpus_monitoring.distribution.containsKey(i) && wumpus_monitoring.distribution.get(i) > 0)
                 {
-                    this.myAgent.values.put(i,10000.0);
+                    this.myAgent.values.put(i,wumpus_monitoring.distribution.get(i)*10000.0);
                     continue;
                 }
             }
@@ -110,7 +110,7 @@ public class Exploration_Planification extends Abstract_Exploration_Behaviour {
             }
             //System.out.println("Penality = "+penality);
             //System.out.println("Values : "+values);
-            if((m > this.myAgent.values.get(i)) && !this.myAgent.penality.contains(i))
+            if((m > this.myAgent.values.get(i)) && (!this.myAgent.penality.contains(i) || this.wumpus_monitoring.distribution.get(i)>0) )
                 this.myAgent.values.put(i,m);
         }
     }
@@ -249,7 +249,6 @@ public class Exploration_Planification extends Abstract_Exploration_Behaviour {
                             wumpus_monitoring.setDistributionWumpus(Integer.parseInt(c.getLeft()),Integer.parseInt(myPosition));
                             this.myAgent.plan_courant.clear();
                             this.myAgent.plans.clear();
-                            System.out.println("Distribution du wumpus : "+wumpus_monitoring.distribution);
                             System.out.println();
 
                         }
@@ -266,6 +265,8 @@ public class Exploration_Planification extends Abstract_Exploration_Behaviour {
         }
     }
 
+
+
     public void move(){
         updateStructurePlanification();
         if(wumpus_monitoring == null)
@@ -275,24 +276,32 @@ public class Exploration_Planification extends Abstract_Exploration_Behaviour {
         if(this.wumpus_monitoring.distribution.keySet().isEmpty())
             wumpus_monitoring.setDistributionWumpus(-1,Integer.parseInt(this.myAgent.getCurrentPosition()));
         influerValeurOdeur();
+        System.out.println("Distribution du wumpus : "+wumpus_monitoring.distribution);
 
 
         intialiserValeurs();
-        System.out.println("Du coup les valeurs sont :"+this.myAgent.values);
+        //System.out.println("Du coup les valeurs sont :"+this.myAgent.values);
         Scanner sc = new Scanner(System.in);
 
         //sc.nextLine();
         String next_pos = howToMove();
         try{
             boolean success = ((AbstractDedaleAgent)this.myAgent).moveTo(next_pos);
-            System.out.println("Aprés calcul l'agent décide de bouger vers"+next_pos);
+            //System.out.println("Aprés calcul l'agent décide de bouger vers"+next_pos);
 
             //sc.nextLine();
             while(!success){
+                if(wumpus_monitoring.distribution.containsKey(Integer.parseInt(next_pos)))
+                {
+                    System.out.println("Normalement ça patch");
+                    //wumpus_monitoring.distribution.put(Integer.valueOf(next_pos),100+wumpus_monitoring.distribution.get(Integer.parseInt(next_pos)));
+                    System.out.println("Post patch : "+wumpus_monitoring.distribution);
+                }
                 this.myAgent.penality.add(Integer.valueOf(next_pos));
                 updateStructurePlanification();
                 //influerValeurOdeur();
                 intialiserValeurs();
+                System.out.println("Valeurs : "+this.myAgent.values);
                 next_pos = howToMove();
                 success = ((AbstractDedaleAgent)this.myAgent).moveTo(next_pos);
                 nearest_open_node = null;
@@ -319,11 +328,11 @@ public class Exploration_Planification extends Abstract_Exploration_Behaviour {
             this.myAgent.plans.clear();
             calculerPlans();
             genererPlans(Integer.parseInt(myPosition));
-            System.out.println("Valeurs : "+this.myAgent.values);
-            System.out.println("Pénalités : "+this.myAgent.penality);
-            System.out.println("Plans calculés part de "+myPosition+" : "+this.myAgent.plans);
+            //System.out.println("Valeurs : "+this.myAgent.values);
+            //System.out.println("Pénalités : "+this.myAgent.penality);
+            //System.out.println("Plans calculés part de "+myPosition+" : "+this.myAgent.plans);
             this.myAgent.plan_courant = this.myAgent.plans.getFirst();
-            System.out.println("Plan séléctionné : "+this.myAgent.plan_courant);
+            //System.out.println("Plan séléctionné : "+this.myAgent.plan_courant);
             this.myAgent.plan_courant.removeFirst();
         }
         //System.out.println("=====================Position : "+myPosition);
@@ -333,12 +342,12 @@ public class Exploration_Planification extends Abstract_Exploration_Behaviour {
         {
             LinkedList<Integer> L = new LinkedList<>(this.myAgent.successeurs.get(Integer.valueOf(myPosition)));
             prochain_noeud = L.get(0).toString();
-            System.out.println("Size = 0 donc par défaut on prend "+prochain_noeud);
+            //System.out.println("Size = 0 donc par défaut on prend "+prochain_noeud);
 
         }
         else
         {
-            System.out.println("Prochain noeud pris : "+prochain_noeud);
+            //System.out.println("Prochain noeud pris : "+prochain_noeud);
             prochain_noeud = String.valueOf(this.myAgent.plan_courant.getFirst());
             this.myAgent.plan_courant.removeFirst();
         }
