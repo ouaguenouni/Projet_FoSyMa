@@ -20,7 +20,6 @@ public class Exploration_Planification extends Abstract_Exploration_Behaviour {
     public Planification_Agent myAgent;
 
     LinkedList<Integer> puanteur = new LinkedList<>();
-    Markov_Model wumpus_monitoring = null;
 
     public Exploration_Planification(AbstractDedaleAgent myagent, ParallelBehaviour parallel_queue) {
         super(myagent);
@@ -72,9 +71,9 @@ public class Exploration_Planification extends Abstract_Exploration_Behaviour {
                 continue;
             }
             else{
-                if(wumpus_monitoring.distribution.containsKey(i) && wumpus_monitoring.distribution.get(i) > 0)
+                if(this.myAgent.general_monitoring.distribution.containsKey(i) && this.myAgent.general_monitoring.distribution.get(i) > 0)
                 {
-                    this.myAgent.values.put(i,wumpus_monitoring.distribution.get(i)*10000.0);
+                    this.myAgent.values.put(i, this.myAgent.general_monitoring.distribution.get(i)*10000.0);
                     continue;
                 }
             }
@@ -110,7 +109,7 @@ public class Exploration_Planification extends Abstract_Exploration_Behaviour {
             }
             //System.out.println("Penality = "+penality);
             //System.out.println("Values : "+values);
-            if((m > this.myAgent.values.get(i)) && (!this.myAgent.penality.contains(i) || this.wumpus_monitoring.distribution.get(i)>0) )
+            if((m > this.myAgent.values.get(i)) && (!this.myAgent.penality.contains(i) || this.myAgent.general_monitoring.distribution.get(i)>0) )
                 this.myAgent.values.put(i,m);
         }
     }
@@ -246,7 +245,7 @@ public class Exploration_Planification extends Abstract_Exploration_Behaviour {
                         {
                             System.out.println("Je sens quelque chose de "+c.getLeft());
                             puanteur.add(Integer.valueOf(c.getLeft()));
-                            wumpus_monitoring.setDistributionWumpus(Integer.parseInt(c.getLeft()),Integer.parseInt(myPosition));
+                            this.myAgent.general_monitoring.setDistributionWumpus(Integer.parseInt(c.getLeft()),Integer.parseInt(myPosition));
                             this.myAgent.plan_courant.clear();
                             this.myAgent.plans.clear();
                             System.out.println();
@@ -269,14 +268,14 @@ public class Exploration_Planification extends Abstract_Exploration_Behaviour {
 
     public void move(){
         updateStructurePlanification();
-        if(wumpus_monitoring == null)
-            wumpus_monitoring = new Markov_Model(this.myAgent.successeurs);
-        if(!wumpus_monitoring.nodePresent(this.myAgent.successeurs))
-            wumpus_monitoring.updateModele(this.myAgent.successeurs,-1);
-        if(this.wumpus_monitoring.distribution.keySet().isEmpty())
-            wumpus_monitoring.setDistributionWumpus(-1,Integer.parseInt(this.myAgent.getCurrentPosition()));
+        if(this.myAgent.general_monitoring == null)
+            this.myAgent.general_monitoring = new Markov_Model(this.myAgent.successeurs);
+        if(!this.myAgent.general_monitoring.nodePresent(this.myAgent.successeurs))
+            this.myAgent.general_monitoring.updateModele(this.myAgent.successeurs,-1);
+        if(this.myAgent.general_monitoring.distribution.keySet().isEmpty())
+            this.myAgent.general_monitoring.setDistributionWumpus(-1,Integer.parseInt(this.myAgent.getCurrentPosition()));
         influerValeurOdeur();
-        System.out.println("Distribution du wumpus : "+wumpus_monitoring.distribution);
+        //System.out.println("Distribution du wumpus : "+ this.myAgent.general_monitoring.distribution);
 
 
         intialiserValeurs();
@@ -291,17 +290,14 @@ public class Exploration_Planification extends Abstract_Exploration_Behaviour {
 
             //sc.nextLine();
             while(!success){
-                if(wumpus_monitoring.distribution.containsKey(Integer.parseInt(next_pos)))
+                if(this.myAgent.general_monitoring.distribution.containsKey(Integer.parseInt(next_pos)))
                 {
-                    System.out.println("Normalement ça patch");
                     //wumpus_monitoring.distribution.put(Integer.valueOf(next_pos),100+wumpus_monitoring.distribution.get(Integer.parseInt(next_pos)));
-                    System.out.println("Post patch : "+wumpus_monitoring.distribution);
                 }
                 this.myAgent.penality.add(Integer.valueOf(next_pos));
                 updateStructurePlanification();
                 //influerValeurOdeur();
                 intialiserValeurs();
-                System.out.println("Valeurs : "+this.myAgent.values);
                 next_pos = howToMove();
                 success = ((AbstractDedaleAgent)this.myAgent).moveTo(next_pos);
                 nearest_open_node = null;
@@ -311,7 +307,7 @@ public class Exploration_Planification extends Abstract_Exploration_Behaviour {
         }catch (RuntimeException E){
             finished = true;
         }
-        wumpus_monitoring.avancerDansLeTemps();
+        this.myAgent.general_monitoring.avancerDansLeTemps();
         //this.myAgent.penality.clear();
     }
 

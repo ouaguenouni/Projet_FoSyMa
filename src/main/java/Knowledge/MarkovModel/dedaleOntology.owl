@@ -1,0 +1,136 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://www.semanticweb.org/mohamed/ontologies/2020/2/DedaleOnt#"
+     xml:base="http://www.semanticweb.org/mohamed/ontologies/2020/2/DedaleOnt"
+     xmlns:ont="http://www.co-ode.org/ontologies/ont.owl#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+    <owl:Ontology/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.co-ode.org/ontologies/ont.owl#oppenned -->
+
+    <owl:ObjectProperty rdf:about="http://www.co-ode.org/ontologies/ont.owl#oppenned"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/mohamed/ontologies/2020/2/DedaleOnt#Agent -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mohamed/ontologies/2020/2/DedaleOnt#Agent">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mohamed/ontologies/2020/2/DedaleOnt#Person"/>
+        <owl:disjointWith rdf:resource="http://www.w3.org/2002/07/owl#Nothing"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/mohamed/ontologies/2020/2/DedaleOnt#Node -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mohamed/ontologies/2020/2/DedaleOnt#Node">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+        <owl:disjointWith rdf:resource="http://www.w3.org/2002/07/owl#Nothing"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/mohamed/ontologies/2020/2/DedaleOnt#Person -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mohamed/ontologies/2020/2/DedaleOnt#Person">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+        <owl:disjointWith rdf:resource="http://www.w3.org/2002/07/owl#Nothing"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/mohamed/ontologies/2020/2/DedaleOnt#Wumpus -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mohamed/ontologies/2020/2/DedaleOnt#Wumpus">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mohamed/ontologies/2020/2/DedaleOnt#Person"/>
+        <owl:disjointWith rdf:resource="http://www.w3.org/2002/07/owl#Nothing"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/mohamed/ontologies/2020/2/DedaleOnt#closedNode -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mohamed/ontologies/2020/2/DedaleOnt#closedNode">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mohamed/ontologies/2020/2/DedaleOnt#Node"/>
+        <owl:disjointWith rdf:resource="http://www.semanticweb.org/mohamed/ontologies/2020/2/DedaleOnt#openNode"/>
+        <owl:disjointWith rdf:resource="http://www.w3.org/2002/07/owl#Nothing"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/mohamed/ontologies/2020/2/DedaleOnt#openNode -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/mohamed/ontologies/2020/2/DedaleOnt#openNode">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/mohamed/ontologies/2020/2/DedaleOnt#Node"/>
+        <owl:disjointWith rdf:resource="http://www.w3.org/2002/07/owl#Nothing"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.w3.org/2002/07/owl#Nothing -->
+
+    <rdf:Description rdf:about="http://www.w3.org/2002/07/owl#Nothing"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/mohamed/ontologies/2020/2/DedaleOnt#Agent2 -->
+
+    <owl:Thing rdf:about="http://www.semanticweb.org/mohamed/ontologies/2020/2/DedaleOnt#Agent2">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+        <rdf:type rdf:resource="http://www.semanticweb.org/mohamed/ontologies/2020/2/DedaleOnt#Agent"/>
+        <rdf:type rdf:resource="http://www.semanticweb.org/mohamed/ontologies/2020/2/DedaleOnt#Person"/>
+        <ont:oppenned rdf:resource="http://www.semanticweb.org/mohamed/ontologies/2020/2/DedaleOnt#N1"/>
+    </owl:Thing>
+    
+
+
+    <!-- http://www.semanticweb.org/mohamed/ontologies/2020/2/DedaleOnt#N1 -->
+
+    <owl:Thing rdf:about="http://www.semanticweb.org/mohamed/ontologies/2020/2/DedaleOnt#N1">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+        <rdf:type rdf:resource="http://www.semanticweb.org/mohamed/ontologies/2020/2/DedaleOnt#Node"/>
+    </owl:Thing>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi -->
+

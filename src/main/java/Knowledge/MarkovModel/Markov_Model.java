@@ -10,8 +10,8 @@ import java.util.LinkedList;
 public class Markov_Model implements Serializable {
     public HashMap<Integer,Double> distribution = new HashMap<>();
     public HashMap<String,HashMap<Integer,Double>> evidences = new HashMap<>();
-    public HashMap<Integer, HashSet<Integer>> successeurs;
-    public HashSet<Integer> noeuds = new HashSet<>();
+    public transient HashMap<Integer, HashSet<Integer>> successeurs;
+    public transient HashSet<Integer> noeuds = new HashSet<>();
 
     public Markov_Model(HashMap<Integer, HashSet<Integer>> successeurs){
         this.successeurs = successeurs;

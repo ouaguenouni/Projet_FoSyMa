@@ -2,7 +2,9 @@ package Agents;
 
 import Behaviours.Coordination_Behaviour.General_Behaviour;
 import Behaviours.ExplorationBehaviours.Abstract_Exploration_Behaviour;
+import Behaviours.Planification.communiquerDistributions;
 import Knowledge.Map_Representation;
+import Knowledge.MarkovModel.Markov_Model;
 import eu.su.mas.dedale.mas.AbstractDedaleAgent;
 import eu.su.mas.dedale.mas.agent.behaviours.startMyBehaviours;
 import jade.core.behaviours.Behaviour;
@@ -34,6 +36,8 @@ public class Planification_Agent extends Simple_Agent {
     public LinkedList<LinkedList<Integer>> plans = new LinkedList<>();
     public LinkedList<Integer> plan_courant = new LinkedList<>();
     public LinkedList<Integer> penality = new LinkedList<>();
+    public Markov_Model general_monitoring = null;
+
 
 
     public void setExploratory_behaviour(Abstract_Exploration_Behaviour exploratory_behaviour) {

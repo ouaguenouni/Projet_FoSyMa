@@ -1,2 +1,4 @@
 # Project exclude paths
 /target/
+/src/main/java/Knowledge/examples/
+/src/main/java/Knowledge/examples/aggregates/

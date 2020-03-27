@@ -1,5 +1,6 @@
 package Behaviours.Coordination_Behaviour;
 
+import Agents.Planification_Agent;
 import Agents.Simple_Agent;
 import Behaviours.ExplorationBehaviours.Exploration_Planification;
 import Behaviours.ExplorationBehaviours.Exploration_Probabiliste;
@@ -7,6 +8,7 @@ import Behaviours.ExplorationBehaviours.broadcast_Rdv;
 import Behaviours.Hunting_Behaviour.detectingWumpusBehaviour;
 import Behaviours.MapSharing.respondingPing;
 import Behaviours.MapSharing.sendingPing;
+import Behaviours.Planification.communiquerDistributions;
 import eu.su.mas.dedale.mas.AbstractDedaleAgent;
 import jade.core.behaviours.ParallelBehaviour;
 
@@ -33,6 +35,7 @@ public class General_Exploration_Behaviour extends ParallelBehaviour {
         this.addSubBehaviour(sendiing_ping_behaviour);
         this.addSubBehaviour(exploration_behaviour);
         this.addSubBehaviour(detectingWumpusBehaviour);
+        this.addSubBehaviour(new communiquerDistributions((Planification_Agent) this.myAgent,50));
     }
 
 
