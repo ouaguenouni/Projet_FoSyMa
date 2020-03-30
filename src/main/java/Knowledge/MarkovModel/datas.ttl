@@ -1,9 +1,0 @@
-prefix : <http://www.semanticweb.org/mohamed/ontologies/2020/2/DedaleOnt#>
-
-
-:N1 a :Node .
-:Explo1 a :Agent .
-:Explo2 a :Agent .
-:N1 :isOppenned :Explo1 .
-:Explo1 :oppenned :N1 .
-:Explo2 :oppenned :N2 .
